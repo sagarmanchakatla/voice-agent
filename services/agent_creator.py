@@ -37,7 +37,7 @@ class AgentCreator:
 
     @staticmethod
     def create_retell_llm(llm_config: Dict[str, Any]) -> Tuple[Dict[str, Any], int]:
-        """Create a Retell LLM configuration based on documentation"""
+        
         retell_base_url = os.getenv("RETELL_BASE_URL", "https://api.retellai.com")
         url = f"{retell_base_url}/create-retell-llm"
         headers = {
@@ -45,17 +45,14 @@ class AgentCreator:
             "Content-Type": "application/json"
         }
         
-        # Following the documentation structure
         payload = {
             "s2s_model": llm_config.get("s2s_model", "gpt-4o-realtime"),
             "model_temperature": llm_config.get("model_temperature", 0.7),
         }
         
-        # Optional OpenAI API key
         if "openai_api_key" in llm_config:
             payload["openai_api_key"] = llm_config["openai_api_key"]
         
-        # Optional system message
         if "system_message" in llm_config:
             payload["system_message"] = llm_config["system_message"]
             
@@ -65,7 +62,6 @@ class AgentCreator:
 
     @staticmethod
     def create_retell_agent(agent_data: Dict[str, Any]) -> Tuple[Dict[str, Any], int]:
-        """Create a Retell agent with existing LLM configuration"""
         retell_base_url = os.getenv("RETELL_BASE_URL", "https://api.retellai.com/v2")
         url = f"{retell_base_url}/create-agent"
         headers = {
@@ -73,7 +69,6 @@ class AgentCreator:
             "Content-Type": "application/json"
         }
         
-        # Following documented structure for agent creation
         payload = {
             "agent_name": agent_data.get("name", "My Agent"),
             "response_engine": {
@@ -86,7 +81,6 @@ class AgentCreator:
             "language": agent_data.get("language", "en-US"),
         }
         
-        # Optional fields based on documentation
         if "initial_message" in agent_data:
             payload["initial_message"] = agent_data["initial_message"]
         
@@ -102,28 +96,23 @@ class AgentCreator:
 
     @staticmethod
     def create_retell_agent_with_llm(agent_config: Dict[str, Any]) -> Tuple[Dict[str, Any], int]:
-        """Complete flow: Create LLM then create agent"""
-        # Prepare LLM configuration from agent config
         llm_config = {
             "s2s_model": agent_config.get("s2s_model", "gpt-4o-realtime"),
             "model_temperature": agent_config.get("temperature", 0.7),
         }
         
-        # Add optional LLM parameters if provided
         if "system_message" in agent_config:
             llm_config["system_message"] = agent_config["system_message"]
         
         if "openai_api_key" in agent_config:
             llm_config["openai_api_key"] = agent_config["openai_api_key"]
         
-        # Create the LLM
         llm_response, status = AgentCreator.create_retell_llm(llm_config)
         if status != 200:
             return llm_response, status
         
         print(f"LLM created successfully: {llm_response}")
         
-        # Prepare agent data using the LLM ID
         agent_data = {
             "name": agent_config.get("name", "My Agent"),
             "voice_id": agent_config.get("voice_id", "11labs-michael"),
@@ -133,7 +122,6 @@ class AgentCreator:
             "llm_version": llm_response.get("version", 0)
         }
         
-        # Add optional agent parameters if provided
         if "initial_message" in agent_config:
             agent_data["initial_message"] = agent_config["initial_message"]
         elif "first_message" in agent_config:  # Support alternative naming
@@ -145,5 +133,4 @@ class AgentCreator:
         if "webhook_auth" in agent_config:
             agent_data["webhook_auth"] = agent_config["webhook_auth"]
         
-        # Create the agent with the LLM ID
         return AgentCreator.create_retell_agent(agent_data)
