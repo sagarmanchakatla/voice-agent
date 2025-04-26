@@ -13,6 +13,7 @@ The Voice Agent API provides a unified interface for creating AI voice agents ac
 - **Error Handling** with standardized error responses
 
 ## Dashboard (Vapi)
+
 ![Vapi Dashboard](images/vapi.png)
 
 ## API Documentation
@@ -77,16 +78,17 @@ curl -X POST "https://voice-agent-wlw1.onrender.com/create-agent" \
 -H "Content-Type: application/json" \
 -d '{
     "provider": "retell",
-    "agent_data": {
-        "name": "My Retell Agent",
-        "system_message": "You are a helpful customer service assistant",
-        "initial_message": "Hello! How can I assist you today?",
-        "s2s_model": "gpt-4o-realtime",
-        "temperature": 0.7,
-        "voice_id": "11labs-michael",
-        "language": "en-US"
+    "name": "Sales Representative",
+    "description": "An agent that helps with product inquiries and sales",
+    "model": "gpt-4",
+    "voice_id": "11labs-bella",
+    "system_prompt": "You are a friendly sales representative for a tech company. Help customers understand product features and benefits.",
+    "initial_message": "Hi there! I'm your virtual sales assistant. What products are you interested in today?",
+    "webhook_url": "https://webhook.site/your-test-webhook-id",
+    "metadata": {
+      "department": "sales",
+      "product_focus": "software"
     }
-}
 }'
 ```
 
@@ -96,23 +98,23 @@ curl -X POST "https://voice-agent-wlw1.onrender.com/create-agent" \
 
 ```json
 {
-    "createdAt": "2025-04-26T09:23:38.729Z",
-    "firstMessage": "Hello! How may I assist you today?",
-    "id": "b31f79d6-980e-4ef0-aa18-cc3f54abfe4b",
-    "isServerUrlSecretSet": false,
-    "model": {
-        "model": "gpt-3.5-turbo",
-        "provider": "openai",
-        "systemPrompt": "You are a polite customer support agent",
-        "temperature": 0.7
-    },
-    "name": "Test1",
-    "orgId": "1f1aa301-8b5a-4aea-973b-b9b5388c66cf",
-    "updatedAt": "2025-04-26T09:23:38.729Z",
-    "voice": {
-        "provider": "11labs",
-        "voiceId": "21m00Tcm4TlvDq8ikWAM"
-    }
+  "createdAt": "2025-04-26T09:23:38.729Z",
+  "firstMessage": "Hello! How may I assist you today?",
+  "id": "b31f79d6-980e-4ef0-aa18-cc3f54abfe4b",
+  "isServerUrlSecretSet": false,
+  "model": {
+    "model": "gpt-3.5-turbo",
+    "provider": "openai",
+    "systemPrompt": "You are a polite customer support agent",
+    "temperature": 0.7
+  },
+  "name": "Test1",
+  "orgId": "1f1aa301-8b5a-4aea-973b-b9b5388c66cf",
+  "updatedAt": "2025-04-26T09:23:38.729Z",
+  "voice": {
+    "provider": "11labs",
+    "voiceId": "21m00Tcm4TlvDq8ikWAM"
+  }
 }
 ```
 
@@ -120,8 +122,8 @@ curl -X POST "https://voice-agent-wlw1.onrender.com/create-agent" \
 
 ```json
 {
-    "error": "string",
-    "details": "string"  // optional
+  "error": "string",
+  "details": "string" // optional
 }
 ```
 
