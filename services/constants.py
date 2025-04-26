@@ -1,0 +1,5 @@
+# Default values
+DEFAULT_VOICE_ID = '21m00Tcm4TlvDq8ikWAM'
+DEFAULT_FIRST_MESSAGE = 'Hi, how can I help you?'
+DEFAULT_LANGUAGE = 'en-US'
+DEFAULT_TEMPERATURE = 0.7
