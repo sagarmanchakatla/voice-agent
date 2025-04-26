@@ -12,6 +12,9 @@ The Voice Agent API provides a unified interface for creating AI voice agents ac
 - **Environment-Based Configuration** for easy deployment
 - **Error Handling** with standardized error responses
 
+## Dashboard (Vapi)
+![Vapi Dashboard](images/vapi.png)
+
 ## API Documentation
 
 ### Base URL
